@@ -1,22 +1,22 @@
 package com.casso.admintool.rest.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
+@Table(name = "user")
+@EntityListeners(AuditingEntityListener.class)
+
 public class User implements Serializable {
-  private Integer id;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	private String email;
 	private String firstname;
 	private String lastname;
@@ -26,21 +26,26 @@ public class User implements Serializable {
 	private Integer business_id_lastest;
 	private Integer status;
 
-  public User(String email, String firstname, String lastname, String name, String password_hash) {
-    super();
+	public User(Integer id, String email, String firstname, String lastname, String name, String password_hash,
+			Integer active, Integer business_id_lastest, Integer status) {
+		super();
+		this.id = id;
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.name = name;
 		this.password_hash = password_hash;
-  }
+		this.active = active;
+		this.business_id_lastest = business_id_lastest;
+		this.status = status;
+	}
 
-  public User() {
+	public User() {
 		super();
 	}
 
 
-  @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Integer getId() {
@@ -87,8 +92,7 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-
-	@JsonIgnore
+	// @JsonIgnore
 	@Column(name = "password_hash")
 	public String getPasswordHash() {
 		return password_hash;
@@ -96,6 +100,31 @@ public class User implements Serializable {
 
 	public void setPasswordHash(String password_hash) {
 		this.password_hash = password_hash;
+	}
+	@Column(name = "active")
+	public Integer getActive() {
+		return active;
+	}
+
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+	@Column(name = "business_id_lastest")
+	public Integer getBusiness_id_lastest() {
+		return business_id_lastest;
+	}
+
+	public void setBusiness_id_lastest(Integer business_id_lastest) {
+		this.business_id_lastest = business_id_lastest;
+	}
+
+	@Column(name = "status")
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }
